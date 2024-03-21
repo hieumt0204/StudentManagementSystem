@@ -21,8 +21,10 @@ namespace StudentManagementSystem.Pages.Exercises
 
         [BindProperty]
         public Excercy Excercy { get; set; } = default!;
+        [BindProperty]
+        public string SubjectId { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string id, string subjectId)
         {
             if (id == null || _context.Excercies == null)
             {
@@ -41,7 +43,7 @@ namespace StudentManagementSystem.Pages.Exercises
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string id, string subjectId)
         {
             if (!ModelState.IsValid)
             {
@@ -66,7 +68,7 @@ namespace StudentManagementSystem.Pages.Exercises
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new {SubjectId = subjectId });
         }
 
         private bool ExcercyExists(string id)

@@ -25,7 +25,8 @@ namespace StudentManagementSystem.Pages.StudentExercise
            
             int? roleId = HttpContext?.Session.GetInt32("RoleId");
             string studentId = HttpContext?.Session.GetString("StudentId");
-            if(roleId == null || studentId == null)
+
+            if(roleId == 0 && studentId == null)
             {
                 return Redirect("/login");
             }
@@ -33,7 +34,13 @@ namespace StudentManagementSystem.Pages.StudentExercise
             {
                 StudentsExcercy = await _context.StudentsExcercies
                 .Include(s => s.ExerciseNameNavigation)
-                .Include(s => s.Student).Where(s => s.StudentId == studentId).ToListAsync();
+                .Include(s => s.Student).ToListAsync();
+                if(studentId != null)
+                {
+                    StudentsExcercy = await _context.StudentsExcercies
+               .Include(s => s.ExerciseNameNavigation)
+               .Include(s => s.Student).Where(x => x.StudentId == studentId).ToListAsync();
+                }
 
             }
             return Page();

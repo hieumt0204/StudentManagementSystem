@@ -1,0 +1,62 @@
+﻿@page
+@model StudentManagementSystem.Pages.StudentExamSchedule.IndexModel
+@{
+}
+
+<table class="table">
+    <thead class="table-success">
+        <tr>
+            <th>
+                Room
+            </th>
+            <th>
+                Type of Exam
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Time
+            </th>
+            <th>
+                Date of Public Announcement
+            </th>
+            <th>
+                Date of Resit
+            </th>
+            <th>
+                Time of Resit
+            </th>
+            <th>
+                Date of Public Announcement for Resit
+            </th>
+            <th>
+                Semester
+            </th>
+            <th>
+                Subject
+            </th>
+            <th>Student Id</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ExamSchedules.OrderBy(e => e.Date))
+        {
+            <tr>
+                <td>@item.Room</td>
+                <td>@item.TypeOfExam</td>
+                <td>@item.Date.ToShortDateString()</td>
+                <td>@item.TimeFrom - @item.TimeTo</td>
+                <td>@item.DateOfPublic.ToShortDateString()</td>
+                <td>@item.DateOfResit</td>
+                <td>@item.TimeFromResit - @item.TimeToResit</td>
+                <td>@item.DateOfPublicResit</td>
+                <td>@item.Semester.SemesterId</td>
+                <td>@item.Subject.SubjectId</td>
+                <td>@ViewBag.StudentId</td>
+
+            </tr>
+        }
+    </tbody>
+</table>

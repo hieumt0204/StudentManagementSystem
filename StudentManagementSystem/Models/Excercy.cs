@@ -15,7 +15,7 @@ namespace StudentManagementSystem.Models
         public DateTime Dateline { get; set; }
         public string SubjectId { get; set; } = null!;
 
-        public virtual Subject? Subject { get; set; } = null!;
-        public virtual ICollection<StudentsExcercy>? StudentsExcercies { get; set; }
+        public virtual Subject Subject { get; set; } = null!;
+        public virtual ICollection<StudentsExcercy> StudentsExcercies { get; set; }
     }
 }

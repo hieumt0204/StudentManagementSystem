@@ -17,7 +17,7 @@ namespace StudentManagementSystem.Pages.Exercises
         {
             _context = context;
         }
-
+        public IQueryable<Excercy> query;
         public IList<Excercy> Excercy { get; set; } = default!;
         [BindProperty(SupportsGet = true, Name = "ipp")]
         public int ItemsPerPage { get; set; } = 15;
@@ -27,14 +27,20 @@ namespace StudentManagementSystem.Pages.Exercises
         public int currentPage { get; set; }
 
         public int countPages { get; set; }
+        [BindProperty]
+        public string? SubjectId { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string? subjectId)
         {
-            if (_context.Excercies != null)
+            query = _context.Excercies.Include(x => x.Subject);
+
+            SubjectId = subjectId;
+            if (!string.IsNullOrEmpty(SubjectId))
             {
-                Excercy = await _context.Excercies
-                .Include(e => e.Subject).ToListAsync();
+                query = _context.Excercies.Include(e => e.Subject).Where(x => x.SubjectId.Contains(SubjectId));
             }
+            
+            
             int totalExcercies = await _context.Excercies.CountAsync();
             ViewData["TotalExcercies"] = totalExcercies;
             countPages = (int)Math.Ceiling((double)totalExcercies / ItemsPerPage);
@@ -45,7 +51,7 @@ namespace StudentManagementSystem.Pages.Exercises
             if (currentPage > countPages)
                 currentPage = countPages;
             currentPage = Math.Max(currentPage, 1);
-            Excercy = await _context.Excercies
+            Excercy = await query
                .OrderBy(s => s.SubjectId)
                .Skip((currentPage - 1) * ItemsPerPage)
                .Take(ItemsPerPage)

@@ -26,7 +26,7 @@
     <div class="row bg-white p-2">
         <div class="col-sm-12">
             <div class="white-box">
-                <h3 class="box-title">Manage Users </h3>
+                <h3 class="box-title">Manage Student </h3>
                 <form method="get">
                     <div class="row">
                         <div class="col-md-3 form-group">
@@ -49,7 +49,7 @@
                     @if (Model.Student.Any())
                     {
                         <table id="userTable" data-toggle="table"
-                        class="table text-nowrap">
+                               class="table text-nowrap">
                             <thead>
                                 <tr>
 
@@ -65,7 +65,7 @@
                                     <th data-sortable="true">
                                         @Html.DisplayNameFor(model => model.Student[0].Password)
                                     </th>
-                                  
+
                                     <th data-sortable="true">
                                         @Html.DisplayNameFor(model => model.Student[0].Major)
                                     </th>
@@ -92,7 +92,7 @@
                                         <td>
                                             ****@item.Password.Substring(item.Password.Length/2)
                                         </td>
-                                       
+
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Major.MajorName)
                                         </td>
@@ -113,15 +113,16 @@
                     {
                         <p>No results found.</p>
                     }
+                </div>
             </div>
         </div>
     </div>
-</div>
-@await Html.PartialAsync("/Pages/Shared/_Paging.cshtml",pagingmodel)
+    @await Html.PartialAsync("/Pages/Shared/_Paging.cshtml",pagingmodel)
 }
-else{
+else
+{
     @await Html.PartialAsync("_AccessDenied")
-    
+
 }
 @*<script>
     $(document).ready(function () {

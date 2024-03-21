@@ -1,0 +1,95 @@
+﻿@page
+@model StudentManagementSystem.Pages.ExamSchedules.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ExamSchedule</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ExamSchedule.ExamScheduleId" />
+            <div class="form-group">
+                <label asp-for="ExamSchedule.Room" class="control-label"></label>
+                <input asp-for="ExamSchedule.Room" class="form-control" />
+                <span asp-validation-for="ExamSchedule.Room" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamSchedule.TypeOfExam" class="control-label"></label>
+                <input asp-for="ExamSchedule.TypeOfExam" class="form-control" />
+                <span asp-validation-for="ExamSchedule.TypeOfExam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamSchedule.Date" class="control-label"></label>
+                <input asp-for="ExamSchedule.Date" class="form-control" />
+                <span asp-validation-for="ExamSchedule.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamSchedule.TimeFrom" class="control-label"></label>
+                <input asp-for="ExamSchedule.TimeFrom" class="form-control" />
+                <span asp-validation-for="ExamSchedule.TimeFrom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamSchedule.TimeTo" class="control-label"></label>
+                <input asp-for="ExamSchedule.TimeTo" class="form-control" />
+                <span asp-validation-for="ExamSchedule.TimeTo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamSchedule.DateOfPublic" class="control-label"></label>
+                <input asp-for="ExamSchedule.DateOfPublic" class="form-control" />
+                <span asp-validation-for="ExamSchedule.DateOfPublic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamSchedule.DateOfResit" class="control-label"></label>
+                <input asp-for="ExamSchedule.DateOfResit" class="form-control" />
+                <span asp-validation-for="ExamSchedule.DateOfResit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamSchedule.TimeFromResit" class="control-label"></label>
+                <input asp-for="ExamSchedule.TimeFromResit" class="form-control" />
+                <span asp-validation-for="ExamSchedule.TimeFromResit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamSchedule.TimeToResit" class="control-label"></label>
+                <input asp-for="ExamSchedule.TimeToResit" class="form-control" />
+                <span asp-validation-for="ExamSchedule.TimeToResit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamSchedule.DateOfPublicResit" class="control-label"></label>
+                <input asp-for="ExamSchedule.DateOfPublicResit" class="form-control" />
+                <span asp-validation-for="ExamSchedule.DateOfPublicResit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamSchedule.LectureId" class="control-label"></label>
+                <select asp-for="ExamSchedule.LectureId" class="form-control" asp-items="ViewBag.LectureId"></select>
+                <span asp-validation-for="ExamSchedule.LectureId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamSchedule.SubjectId" class="control-label"></label>
+                <select asp-for="ExamSchedule.SubjectId" class="form-control" asp-items="ViewBag.SubjectId"></select>
+                <span asp-validation-for="ExamSchedule.SubjectId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExamSchedule.SemesterId" class="control-label"></label>
+                <select asp-for="ExamSchedule.SemesterId" class="form-control" asp-items="ViewBag.SemesterId"></select>
+                <span asp-validation-for="ExamSchedule.SemesterId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

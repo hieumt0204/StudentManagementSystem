@@ -28,21 +28,21 @@
             <div class="white-box">
                 <h3 class="box-title">Manage Exsrcise </h3>
                 <h3>Total Exercise : @ViewBag.TotalExcercies </h3>
-                @* <form method="get">
-            <div class="row">
-            <div class="col-md-3 form-group">
-            <select asp-for="MajorId" class="form-control" asp-items="@ViewBag.MajorId">
-            <option value="">All</option>
-            </select>
-            </div>
+                <form method="get">
+                    <div class="row">
+                        @*<div class="col-md-3 form-group">
+                            <select asp-for="MajorId" class="form-control" asp-items="@ViewBag.MajorId">
+                                <option value="">All</option>
+                            </select>
+                        </div>
 
-            <div class="col-md-9"></div>
-            <div class="col-md-3 form-group">
-            <input placeholder="Search Name..." name="studentName" value="@Model.StudentName" class="form-control" />
-            </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-            </form>*@
+                        <div class="col-md-9"></div>*@
+                        <div class="col-md-3 form-group">
+                            <input placeholder="Search Name..." name="SubjectId" value="@Model.SubjectId" class="form-control" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
                 @if (admin != null)
                 {
                     <p>
@@ -96,7 +96,7 @@
                                     @if (admin != null)
                                     {
                                         <td>
-                                            <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.ExerciseName">Edit</a>
+                                            <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.ExerciseName" asp-route-subjectId="@item.SubjectId">Edit</a>
                                             <a class="btn btn-info" asp-page="./Details" asp-route-id="@item.ExerciseName">Details</a>
                                             <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.ExerciseName">Delete</a>
                                         </td>
