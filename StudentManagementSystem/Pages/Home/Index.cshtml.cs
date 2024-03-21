@@ -20,6 +20,11 @@ namespace StudentManagementSystem.Pages.Home
             int totalStudent = _context.Students.Count();
             ViewData["totalStudent"] = totalStudent;
             totalSubject = _context.Subjects.Count();
+            ViewData["totalSubject"] = totalSubject;
+            var totalClaass = _context.Classes.Count();
+            ViewData["totalClass"] = totalClaass;
+            var totalLectures = _context.Lectures.Count();
+            ViewData["totalLectures"] = totalLectures;
         }
     }
 }

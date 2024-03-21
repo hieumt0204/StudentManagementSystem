@@ -54,9 +54,9 @@
                 <td>@Html.DisplayFor(modelItem => item.RoomNavigation.RoomId)</td>
                 <td>@Html.DisplayFor(modelItem => item.Subject.SubjectId)</td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.ClassSubjectId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.ClassSubjectId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.ClassSubjectId">Delete</a>
+                    <a asp-page="./Edit" asp-route-subjectId="@item.ClassSubjectId">Edit</a> |
+                    <a asp-page="./Details" asp-route-subjectId="@item.ClassSubjectId" asp-route-classId ="@item.ClassId">Details</a> |
+                    <a asp-page="./Delete" asp-route-subjectId="@item.ClassSubjectId">Delete</a>
                 </td>
             </tr>
         }

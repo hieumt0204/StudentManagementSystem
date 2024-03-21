@@ -18,7 +18,7 @@ namespace StudentManagementSystem.Pages.Exercises
             _context = context;
         }
 
-        public IList<Excercy> Excercy { get;set; } = default!;
+        public IList<Excercy> Excercy { get; set; } = default!;
         [BindProperty(SupportsGet = true, Name = "ipp")]
         public int ItemsPerPage { get; set; } = 15;
         //public const int ITEMS_PER_PAGE = 10;

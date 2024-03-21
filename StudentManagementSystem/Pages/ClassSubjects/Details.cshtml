@@ -8,42 +8,55 @@
 <h1>Details</h1>
 
 <div>
-    <h4>ClassSubject</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ClassSubject.NumberOfStudents)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ClassSubject.NumberOfStudents)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ClassSubject.Class)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ClassSubject.Class.ClassId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ClassSubject.Lecture)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ClassSubject.Lecture.LectureId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ClassSubject.RoomNavigation)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ClassSubject.RoomNavigation.RoomId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ClassSubject.Subject)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ClassSubject.Subject.SubjectId)
-        </dd>
-    </dl>
+    <div class="row bg-white p-2">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <h4>Student In Class</h4>
+                <hr />
+                <div class="table-responsive" >
+                    <table id="userTable" data-toggle="table" data-pagination="true" class="table text-nowrap">
+                        <thead>
+                            <tr>
+                                <th data-sortable="true">
+                                    Student Id
+                                </th>
+                                <th data-sortable="true">
+                                    Student Name
+                                </th>
+                                <th data-sortable="true">
+                                    Email
+                                </th>
+                                <th data-sortable="true" >
+                                    Semester
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var student in Model.Students)
+                            {
+                                <tr>
+                                    <td>@student.StudentId</td>
+                                    <td>@student.StudentName</td>
+                                    <td>@student.StudentEmail</td>
+                                    <td>@student.Semester</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index" asp-route-classId="@ViewBag.ClassId">Back to List</a>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#userTable').bootstrapTable();
+
+    });
+</script>

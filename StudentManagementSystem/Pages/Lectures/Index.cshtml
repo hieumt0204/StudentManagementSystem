@@ -1,6 +1,8 @@
 ﻿@page
 @model StudentManagementSystem.Pages.Lectures.IndexModel
-
+@using Microsoft.AspNetCore.Http
+@using StudentManagementSystem.Models;
+@inject IHttpContextAccessor Accessor
 @{
     ViewData["Title"] = "Lectures";
     //var pagingmodel = new StudentManagementSystem.Helpers.PagingModel()
@@ -9,100 +11,128 @@
     //            countPages = Model.countPages,
     //            generateUrl = (int? page) => Url.Page("/Students/Index", new { p = page })
     //        };
+    int? roleId = @Accessor.HttpContext?.Session.GetInt32("RoleId");
+    string studentId = @Accessor.HttpContext?.Session.GetString("StudentId");
+    string lectureId = Accessor.HttpContext?.Session.GetString("LectureId");
+    PRN221_StudentManagementSystemContext context = new PRN221_StudentManagementSystemContext();
+    Student? student = context.Students.FirstOrDefault(x => x.StudentId == studentId);
+    Lecture? lecture = context.Lectures.FirstOrDefault(x => x.LectureId == lectureId);
+    Admin? admin = context.Admins.FirstOrDefault(x => x.RoleId == roleId);
+
 }
 
 
 
 
-<div class="row bg-white p-2">
-    <div class="col-sm-12">
-        <div class="white-box">
-            <h3 class="box-title">Manage Lectures </h3>
-            @*<form method="get">
-                <div class="row">
-                    <div class="col-md-3 form-group">
-                        <select asp-for="MajorId" class="form-control" asp-items="@ViewBag.MajorId">
-                            <option value="">All</option>
-                        </select>
-                    </div>
+@if (admin != null)
+{
+    <div class="row bg-white p-2">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <h3 class="box-title">Manage Users </h3>
+                @*<form method="get">
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <select asp-for="MajorId" class="form-control" asp-items="@ViewBag.MajorId">
+                                <option value="">All</option>
+                            </select>
+                        </div>
 
-                    <div class="col-md-9"></div>
-                    <div class="col-md-3 form-group">
-                        <input placeholder="Search Name..." name="studentName" value="@Model.StudentName" class="form-control" />
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3 form-group">
+                            <input placeholder="Search Name..." name="studentName" value="@Model.StudentName" class="form-control" />
+                        </div>
                     </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Search</button>
-            </form>*@
-            <p>
-                <a class="btn btn-primary mt-2" asp-page="Create">Create New</a>
-            </p>
-            <div class="table-responsive">
-                @if (Model.Lecture.Any())
-                {
-                    <table id="userTable" data-toggle="table"
-                           class="table text-nowrap">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Lecture[0].LectureName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Lecture[0].LectureEmail)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Lecture[0].Password)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Lecture[0].Dob)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Lecture[0].Phone)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Lecture[0].RoleId)
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.Lecture)
-                            {
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>*@
+                <p>
+                    <a class="btn btn-primary mt-2" asp-page="Create">Create New</a>
+                </p>
+                <div class="table-responsive">
+                    @if (Model.Lecture.Any())
+                    {
+                        <table id="userTable" data-toggle="table" data-pagination="true"
+                               class="table text-nowrap">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.LectureName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.LectureEmail)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Password)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Dob)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Phone)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.RoleId)
-                                    </td>
-                                    <td>
-                                        <a asp-page="./Edit" asp-route-id="@item.LectureId" class="btn btn-warning">Edit</a> |
-                                        <a asp-page="./Details" asp-route-id="@item.LectureId" class="btn btn-info">Details</a> |
-                                        <a asp-page="./Delete" asp-route-id="@item.LectureId" class="btn btn-danger">Delete</a>
-                                    </td>
+                                    <th data-sortable="true">
+                                        @Html.DisplayNameFor(model => model.Lecture[0].LectureName)
+                                    </th>
+                                    <th data-sortable="true">
+                                        @Html.DisplayNameFor(model => model.Lecture[0].LectureEmail)
+                                    </th>
+                                    <th data-sortable="true">
+                                        @Html.DisplayNameFor(model => model.Lecture[0].Password)
+                                    </th>
+                                    <th data-sortable="true">
+                                        @Html.DisplayNameFor(model => model.Lecture[0].Dob)
+                                    </th>
+                                    <th data-sortable="true">
+                                        @Html.DisplayNameFor(model => model.Lecture[0].Phone)
+                                    </th>
+                                    <th data-sortable="true">
+                                        @Html.DisplayNameFor(model => model.Lecture[0].RoleId)
+                                    </th>
+                                    <th></th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
-                else
-                {
-                    <p>No results found.</p>
-                }
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Lecture)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.LectureName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.LectureEmail)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Password)
+                                        </td>
+                                        <td>
+                                            @if (item.Dob.HasValue)
+                                            {
+                                                @item.Dob.Value.ToString("dd/MM/yyyy")
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.Dob)
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Phone)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RoleId)
+                                        </td>
+                                        <td>
+                                            <a asp-page="./Edit" asp-route-id="@item.LectureId" class="btn btn-warning">Edit</a> |
+                                            <a asp-page="./Details" asp-route-id="@item.LectureId" class="btn btn-info">Details</a> |
+                                            <a asp-page="./Delete" asp-route-id="@item.LectureId" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No results found.</p>
+                    }
+                </div>
             </div>
         </div>
     </div>
-</div>
-@*@await Html.PartialAsync("/Pages/Shared/_Paging.cshtml",pagingmodel)*@
+   @* @await Html.PartialAsync("/Pages/Shared/_Paging.cshtml",pagingmodel)*@
+}
+else
+{
+    @await Html.PartialAsync("_AccessDenied")
 
+}
+<script>
+    $(document).ready(function () {
+        $('#userTable').bootstrapTable();
+
+    });
+</script>

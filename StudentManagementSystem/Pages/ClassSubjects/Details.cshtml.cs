@@ -19,23 +19,16 @@ namespace StudentManagementSystem.Pages.ClassSubjects
         }
 
       public ClassSubject ClassSubject { get; set; } = default!; 
+        public List<Student> Students { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string? subjectId, int? classId)
         {
-            if (id == null || _context.ClassSubjects == null)
+            if (subjectId == null || _context.ClassSubjects == null || classId == null)
             {
                 return NotFound();
             }
-
-            var classsubject = await _context.ClassSubjects.FirstOrDefaultAsync(m => m.ClassSubjectId == id);
-            if (classsubject == null)
-            {
-                return NotFound();
-            }
-            else 
-            {
-                ClassSubject = classsubject;
-            }
+            Students = await _context.Students.Where(x => x.ClassId == classId).ToListAsync();
+            ViewData["ClassId"] = classId;
             return Page();
         }
     }

@@ -14,8 +14,9 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Class[0].ClassClassName)
+                Class Name
             </th>
+
             <th></th>
         </tr>
     </thead>
@@ -23,8 +24,10 @@
 @foreach (var item in Model.Class) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ClassClassName)
+                    <a asp-page="/ClassSubjects/Index" asp-route-ClassId="@item.ClassId">@item.ClassClassName</a>
             </td>
+            <td>
+
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ClassId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ClassId">Details</a> |

@@ -39,7 +39,8 @@ namespace StudentManagementSystem.Pages.Students
         {
             ViewData["MajorId"] = new SelectList(_context.Majors, "MajorId", "MajorName");
             IQueryable<Student> query = _context.Students
-                                        .Include(s => s.Major);
+                                        .Include(s => s.Major)
+                                        .Include(x => x.Class);
                                         
             MajorId = majorId;
 

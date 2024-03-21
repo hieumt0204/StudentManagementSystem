@@ -1,0 +1,52 @@
+﻿@page
+@model StudentManagementSystem.Pages.StudentExercise.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentsExcercy[0].Mark)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentsExcercy[0].ExerciseNameNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentsExcercy[0].Student)
+            </th>
+            <th>Subject Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.StudentsExcercy) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExerciseNameNavigation.ExerciseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.StudentId)
+            </td>
+            <td>
+                @item.ExerciseNameNavigation.SubjectId
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

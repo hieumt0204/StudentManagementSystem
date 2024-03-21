@@ -100,6 +100,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFuYWdlQ2xhc3Nlc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/ManageClasses/SubjectInClass.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFuYWdlQ2xhc3Nlc1xTdWJqZWN0SW5DbGFzcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -134,6 +138,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/StudentExercise/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudEV4ZXJjaXNlXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/StudentExercise/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudEV4ZXJjaXNlXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/StudentExercise/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudEV4ZXJjaXNlXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/StudentExercise/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudEV4ZXJjaXNlXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/StudentExercise/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudEV4ZXJjaXNlXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/Students/Create.cshtml]
