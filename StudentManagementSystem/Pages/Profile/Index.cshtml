@@ -1,0 +1,74 @@
+﻿@page
+@model StudentManagementSystem.Pages.Profile.IndexModel
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+@*<h1>Update Profile</h1>*@
+@if (@Model.Message != null)
+{
+    <div class="alert alert-success" role="alert">
+        @Model.Message
+    </div>
+}
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Student.StudentId" class="control-label"></label>
+        <input asp-for="Student.StudentId" class="form-control" readonly="true" />
+        <span asp-validation-for="Student.StudentId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Student.StudentName" class="control-label"></label>
+        <input asp-for="Student.StudentName" class="form-control" />
+        <span asp-validation-for="Student.StudentName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Student.StudentEmail" class="control-label"></label>
+        <input asp-for="Student.StudentEmail" class="form-control" />
+        <span asp-validation-for="Student.StudentEmail" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Student.Password" class="control-label"></label>
+        <input asp-for="Student.Password" class="form-control" />
+        <span asp-validation-for="Student.Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Student.Dob" class="control-label"></label>
+        <input asp-for="Student.Dob" class="form-control" />
+        <span asp-validation-for="Student.Dob" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Student.Phone" class="control-label"></label>
+        <input asp-for="Student.Phone" class="form-control" />
+        <span asp-validation-for="Student.Phone" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Student.Gender" class="control-label"></label>
+        <select asp-for="Student.Gender" class="form-control">
+            <option value="true">Male</option>
+            <option value="false">Female</option>
+        </select>
+        <span asp-validation-for="Student.Gender" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Student.MajorId" class="control-label"></label>
+        <input asp-for="Student.MajorId" class="form-control" readonly />
+        <span asp-validation-for="Student.MajorId" class="text-danger"></span>
+    </div>
+    <div class="form-group" style="display: none;">
+        <label asp-for="Student.RoleId" class="control-label"></label>
+        <input asp-for="Student.RoleId" class="form-control" readonly />
+        <span asp-validation-for="Student.RoleId" class="text-danger"></span>
+    </div>
+    <div class="form-group" style="display: none;">
+        <label asp-for="Student.IsActive" class="control-label"></label>
+        <input asp-for="Student.IsActive" class="form-control" readonly />
+        <span asp-validation-for="Student.IsActive" class="text-danger"></span>
+    </div>
+    <div class="form-group" style="display: none;">
+        <label asp-for="Student.ClassId" class="control-label"></label>
+        <input asp-for="Student.ClassId" class="form-control" readonly />
+        <span asp-validation-for="Student.ClassId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

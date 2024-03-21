@@ -29,14 +29,12 @@ namespace StudentManagementSystem.Pages.Majors
         
         public async void OnGetAsync()
         {
-            
-            if(_context.Majors != null)
+            if (_context.Majors != null)
             {
                 Majors = await _context.Majors.ToListAsync();
             }
             int totalMajors = await _context.Majors.CountAsync();
             ViewData["TotalMajors"] = totalMajors;
-
             countPages = (int)Math.Ceiling((double)totalMajors / ItemsPerPage);
             if (currentPage < 1)
             {

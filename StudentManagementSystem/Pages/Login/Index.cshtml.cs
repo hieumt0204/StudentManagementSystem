@@ -91,7 +91,7 @@ namespace StudentManagementSystem.Pages.Login
                     return Redirect("Home");
                 }
             }
-            else if (student != null && Student.Password != null)
+            else if (student != null && Student.Password != null && student.Password == Student.Password)
             {
                 HttpContext.Session.SetString("StudentId", student.StudentId);
                 if (student.RoleId != null)
@@ -100,7 +100,7 @@ namespace StudentManagementSystem.Pages.Login
                     return Redirect("Home");
                 }
             }
-            else if(lecture != null && Student.Password != null)
+            else if(lecture != null && Student.Password != null && lecture.Password == Student.Password)
             {
                 HttpContext.Session.SetString("LectureId", lecture.LectureId);
                 if (lecture.RoleId != null)

@@ -37,6 +37,14 @@ namespace StudentManagementSystem.Pages.StudentExamSchedule
 
                 ExamSchedules = studentExamSchedule;
             }
+            else
+            {
+                ExamSchedules = await _context.ExamSchedules
+                    .Include(e => e.Lecture)
+                    .Include(e => e.Semester)
+                    .Include(e => e.Subject)
+                    .ToListAsync();  
+            }
         }
     }
 }

@@ -22,9 +22,18 @@ namespace StudentManagementSystem.Pages.ManageClasses
 
         public async Task OnGetAsync()
         {
+            var studentId = HttpContext?.Session.GetString("StudentId");
             if (_context.Classes != null)
             {
-                Class = await _context.Classes.ToListAsync();
+                if(studentId == null)
+                {
+                    Class = await _context.Classes.ToListAsync();
+                }
+                else
+                {
+                    Class = await _context.Classes.Where(x => x.Students.Any(s => s.StudentId == studentId)).ToListAsync();
+                }
+                
             }
 
         }
