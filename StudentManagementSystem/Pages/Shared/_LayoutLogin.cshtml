@@ -1,0 +1,51 @@
+﻿@using StudentManagementSystem.Models
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@{
+    int? roleId = @Accessor.HttpContext?.Session.GetInt32("RoleId");
+    string studentId = @Accessor.HttpContext?.Session.GetString("StudentId");
+    PRN221_StudentManagementSystemContext context = new PRN221_StudentManagementSystemContext();
+    Student? student = context.Students.FirstOrDefault(x => x.StudentId == studentId);
+}
+<ul class="navbar-nav ms-auto d-flex align-items-center">
+    @if (student != null)
+    {
+        <li style="margin-left: 1000px">
+            <a class="profile-pic" href="#">
+                <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png" alt="user-img" width="36"
+                     class="img-circle"><span class="text-white font-medium">Welcome, @student.StudentName</span>
+            </a>
+            <a class="profile-pic" href="/Login?handler=Logout" style="margin-left:30px">
+                <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png" alt="user-img" width="36"
+                     class="img-circle"><span class="text-white font-medium">Logout</span>
+            </a>
+        </li>
+        <li class="ml-3 mb-1">
+        </li>
+    }
+    @if (roleId == (int)RoleEnum.ADMIN)
+    {
+        <li style="margin-left: 1000px">
+            <a class="profile-pic" href="#">
+                <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png" alt="user-img" width="36"
+                     class="img-circle"><span class="text-white font-medium">Welcome, ADMIN</span>
+            </a><a class="profile-pic" href="/Logout" style="margin-left:30px">
+                <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png" alt="user-img" width="36"
+                     class="img-circle"><span class="text-white font-medium">Logout</span>
+            </a>
+        </li>
+       
+    }
+    <li style="margin-left: 1300px">
+        <a class="profile-pic" href="/Login">
+            <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png" alt="user-img" width="36"
+                 class="img-circle"><span class="text-white font-medium">Login</span>
+        </a>
+        <a class="profile-pic" href="#" style="margin-left:30px">
+            <img src="https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png" alt="user-img" width="36"
+                 class="img-circle"><span class="text-white font-medium">Register</span>
+        </a>
+    </li>
+    <li class="ml-3 mb-1">
+    </li>
+</ul>

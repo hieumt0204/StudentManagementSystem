@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@using StudentManagementSystem.Models;
+@{
+    int? roleId = @Accessor.HttpContext?.Session.GetInt32("RoleId");
+    string studentId = @Accessor.HttpContext?.Session.GetString("StudentId");
+    string lectureId = Accessor.HttpContext?.Session.GetString("LectureId");
+    PRN221_StudentManagementSystemContext context = new PRN221_StudentManagementSystemContext();
+    Student? student = context.Students.FirstOrDefault(x => x.StudentId == studentId);
+    Lecture? lecture = context.Lectures.FirstOrDefault(x => x.LectureId == lectureId);
+    Admin? admin = context.Admins.FirstOrDefault(x => x.RoleId == roleId);
+}
+@if(student != null)
+{
+    <h1 class="text-danger">Không thể truy cập</h1>
+    <p class="text-danger"> @student.StudentName được phép truy cập vào trang này.</p>
+}
+@if(lecture != null)
+{
+    <h1 class="text-danger">Không thể truy cập</h1>
+    <p class="text-danger"> @lecture.LectureName được phép truy cập vào trang này.</p>
+}
+@if(roleId == null)
+{
+    <h1 class="text-danger">Không thể truy cập</h1>
+}

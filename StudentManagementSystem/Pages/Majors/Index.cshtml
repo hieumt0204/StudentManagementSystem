@@ -1,0 +1,111 @@
+﻿@page
+@model StudentManagementSystem.Pages.Majors.IndexModel
+@using StudentManagementSystem.Models;
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Index";
+    var pagingmodel = new StudentManagementSystem.Helpers.PagingModel()
+            {
+                currentPage = Model.currentPage,
+                countPages = Model.countPages,
+                generateUrl = (int? page) => Url.Page("/Majors/Index", new { p = page })
+            };
+    int? roleId = @Accessor.HttpContext?.Session.GetInt32("RoleId");
+    string studentId = @Accessor.HttpContext?.Session.GetString("StudentId");
+    string lectureId = Accessor.HttpContext?.Session.GetString("LectureId");
+    PRN221_StudentManagementSystemContext context = new PRN221_StudentManagementSystemContext();
+    Student? student = context.Students.FirstOrDefault(x => x.StudentId == studentId);
+    Lecture? lecture = context.Lectures.FirstOrDefault(x => x.LectureId == lectureId);
+    Admin? admin = context.Admins.FirstOrDefault(x => x.RoleId == roleId);
+
+}
+@if (roleId != null)
+{
+    <div class="row bg-white p-2">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <h3 class="box-title">Manage Major </h3>
+                <h3>Total Subjects : @ViewBag.TotalMajors </h3>
+                @* <form method="get">
+            <div class="row">
+            <div class="col-md-3 form-group">
+            <select asp-for="MajorId" class="form-control" asp-items="@ViewBag.MajorId">
+            <option value="">All</option>
+            </select>
+            </div>
+
+            <div class="col-md-9"></div>
+            <div class="col-md-3 form-group">
+            <input placeholder="Search Name..." name="studentName" value="@Model.StudentName" class="form-control" />
+            </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+            </form>*@
+                @if(admin != null)
+                {
+                    <p>
+                        <a class="btn btn-primary mt-2" asp-page="Create">Create New</a>
+                    </p>
+                }
+                <div class="table-responsive">
+                    @*  @if (Model.Majors.Any())*@
+                    @*{*@
+                    <table id="userTable" data-toggle="table"
+                           class="table text-nowrap">
+                        <thead>
+                            <tr>
+
+                                <th data-sortable="true">
+                                    @Html.DisplayNameFor(model => model.Majors[0].MajorId)
+                                </th>
+                                <th data-sortable="true">
+                                    @Html.DisplayNameFor(model => model.Majors[0].MajorName)
+                                </th>
+
+                                @if (admin != null)
+                                {
+                                    <th></th>
+                                }
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Majors)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MajorId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MajorName)
+                                    </td>
+
+                                    @if (admin != null)
+                                    {
+                                        <td>
+                                            <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.MajorId">Edit</a>
+                                            <a class="btn btn-info" asp-page="./Details" asp-route-id="@item.MajorId">Details</a>
+                                            <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.MajorId">Delete</a>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @*}*@
+                    @*  else
+                {
+                <p>No results found.</p>
+                }*@
+                </div>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("/Pages/Shared/_Paging.cshtml",pagingmodel)
+}
+else
+{
+    @await Html.PartialAsync("_AccessDenied")
+}

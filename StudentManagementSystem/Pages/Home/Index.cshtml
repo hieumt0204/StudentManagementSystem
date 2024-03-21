@@ -1,0 +1,71 @@
+﻿@page
+@model StudentManagementSystem.Pages.Home.IndexModel
+@using Microsoft.AspNetCore.Http
+@using StudentManagementSystem.Models;
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Home page";
+    int? roleId = @Accessor.HttpContext?.Session.GetInt32("RoleId");
+    string studentId = @Accessor.HttpContext?.Session.GetString("StudentId");
+    string lectureId = Accessor.HttpContext?.Session.GetString("LectureId");
+    PRN221_StudentManagementSystemContext context = new PRN221_StudentManagementSystemContext();
+    Student? student = context.Students.FirstOrDefault(x => x.StudentId == studentId);
+    Lecture? lecture = context.Lectures.FirstOrDefault(x => x.LectureId == lectureId);
+    Admin? admin = context.Admins.FirstOrDefault(x => x.RoleId == roleId);
+
+}
+
+@if (Model.Message != null)
+{
+
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert"
+                aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        @Model.Message
+    </div>
+}
+
+@if(admin != null){
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="col-sm-6 col-xl-3">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-chart-line fa-3x text-primary"></i>
+                    <div class="ms-3">
+                        <p class="mb-2">Total Student</p>
+                        <h6 class="mb-0">@ViewBag.totalStudent</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                    <div class="ms-3">
+                        <p class="mb-2">Total Subjects</p>
+                        <h6 class="mb-0">@Model.totalSubject</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-chart-area fa-3x text-primary"></i>
+                    <div class="ms-3">
+                        <p class="mb-2">Today Revenue</p>
+                        <h6 class="mb-0">$1234</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                    <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                    <div class="ms-3">
+                        <p class="mb-2">Total Revenue</p>
+                        <h6 class="mb-0">$1234</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

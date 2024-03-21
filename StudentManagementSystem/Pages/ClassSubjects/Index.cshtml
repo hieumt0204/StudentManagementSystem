@@ -1,0 +1,67 @@
+﻿@page
+@model StudentManagementSystem.Pages.ClassSubjects.IndexModel
+@{
+    ViewData["Title"] = "Class Subjects";
+    var pagingmodel = new StudentManagementSystem.Helpers.PagingModel()
+            {
+                currentPage = Model.currentPage,
+                countPages = Model.countPages,
+                generateUrl = (int? page) => Url.Page("/Students/Index", new { p = page })
+            };
+}
+
+<h1>Class Subjects</h1>
+<form method="get">
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <select id="SubjectId" asp-for="SubjectId" class="form-control" asp-items="@ViewBag.SubjectId">
+                <option value="">All</option>
+            </select>
+        </div>
+        <div class="col-md-6 form-group">
+            <select id="ClassId" asp-for="ClassId" class="form-control" asp-items="@ViewBag.ClassId">
+                <option value="">All</option>
+            </select>
+        </div>
+        <br />
+        <div class="col-md-6 form-group">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+        
+    </div>
+</form>
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table id="classSubjectsTable" class="table">
+    <thead>
+        <tr>
+            <th>Number of Students</th>
+            <th>Class</th>
+            <th>Lecture</th>
+            <th>Room</th>
+            <th>Subject</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ClassSubject)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.NumberOfStudents)</td>
+                <td>@Html.DisplayFor(modelItem => item.Class.ClassClassName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Lecture.LectureName)</td>
+                <td>@Html.DisplayFor(modelItem => item.RoomNavigation.RoomId)</td>
+                <td>@Html.DisplayFor(modelItem => item.Subject.SubjectId)</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ClassSubjectId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ClassSubjectId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ClassSubjectId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@await Html.PartialAsync("/Pages/Shared/_Paging.cshtml",pagingmodel)

@@ -1,0 +1,113 @@
+﻿@page
+@using StudentManagementSystem.Models;
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@model StudentManagementSystem.Pages.Subjects.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    var pagingmodel = new StudentManagementSystem.Helpers.PagingModel()
+            {
+                currentPage = Model.currentPage,
+                countPages = Model.countPages,
+                generateUrl = (int? page) => Url.Page("/Subjects/Index", new { p = page })
+            };
+    int? roleId = @Accessor.HttpContext?.Session.GetInt32("RoleId");
+    string studentId = @Accessor.HttpContext?.Session.GetString("StudentId");
+    string lectureId = Accessor.HttpContext?.Session.GetString("LectureId");
+    PRN221_StudentManagementSystemContext context = new PRN221_StudentManagementSystemContext();
+    Student? student = context.Students.FirstOrDefault(x => x.StudentId == studentId);
+    Lecture? lecture = context.Lectures.FirstOrDefault(x => x.LectureId == lectureId);
+    Admin? admin = context.Admins.FirstOrDefault(x => x.RoleId == roleId);
+}
+@if (roleId != null)
+{
+    <div class="row bg-white p-2">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <h3 class="box-title">Manage Subjects </h3>
+                <h3>Total Subjects : @ViewBag.TotalSubjects </h3>
+                 <form method="get">
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <input placeholder="Search Subject Id..." name="subjectId" value="@Model.SubjectId" class="form-control" />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+                @if (admin != null)
+                {
+                    <p>
+                        <a class="btn btn-primary mt-2" asp-page="Create">Create New</a>
+                    </p>
+                }
+
+                <div class="table-responsive">
+                    @if (Model.Subject.Any())
+                    {
+                        <table id="userTable" data-toggle="table"
+                        class="table text-nowrap">
+                            <thead>
+                                <tr>
+
+                                    <th data-sortable="true">
+                                        @Html.DisplayNameFor(model => model.Subject[0].SubjectId)
+                                    </th>
+                                    <th data-sortable="true">
+                                        @Html.DisplayNameFor(model => model.Subject[0].SubjectName)
+                                    </th>
+                                    <th data-sortable="true">
+                                        @Html.DisplayNameFor(model => model.Subject[0].Credit)
+                                    </th>
+                                    @if(admin != null)
+                                    {
+                                        <th></th>
+                                    }
+                             
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Subject)
+                                {
+                                    <tr>
+
+                                        <td>
+
+                                            <a asp-page="/ClassSubjects/Index" asp-route-subjectId="@item.SubjectId"> @Html.DisplayFor(modelItem => item.SubjectId) </a>
+                                        </td>
+                                       
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SubjectName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Credit)
+                                        </td>
+                                        @if (admin != null)
+                                        {
+                                            <td>
+                                                <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.SubjectId">Edit</a>
+                                                <a class="btn btn-info" asp-page="./Details" asp-route-id="@item.SubjectId">Details</a>
+                                                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.SubjectId">Delete</a>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No results found.</p>
+                    }
+            </div>
+        </div>
+    </div>
+</div>
+    @await Html.PartialAsync("/Pages/Shared/_Paging.cshtml",pagingmodel)
+}else{
+
+ @*   <partial name="_AccessDenied"  />*@
+    @await Html.PartialAsync("_AccessDenied")
+
+
+}
