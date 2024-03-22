@@ -15,8 +15,8 @@ namespace StudentManagementSystem.Models
         public int? ClassId { get; set; }
 
         public virtual Class? Class { get; set; }
-        public virtual Lecture Lecture { get; set; } = null!;
-        public virtual Room RoomNavigation { get; set; } = null!;
-        public virtual Subject Subject { get; set; } = null!;
+        public virtual Lecture? Lecture { get; set; } = null!;
+        public virtual Room? RoomNavigation { get; set; } = null!;
+        public virtual Subject? Subject { get; set; } = null!;
     }
 }

@@ -19,12 +19,12 @@ namespace StudentManagementSystem.Pages.Students
             _context = context;
         }
 
-        public IList<Student> Student { get;set; } = default!;
-        [BindProperty(SupportsGet =true,Name = "ipp")]
+        public IList<Student> Student { get; set; } = default!;
+        [BindProperty(SupportsGet = true, Name = "ipp")]
         public int ItemsPerPage { get; set; } = 10;
         //public const int ITEMS_PER_PAGE = 10;
-        [BindProperty(SupportsGet =true, Name = "p")]
-        
+        [BindProperty(SupportsGet = true, Name = "p")]
+
         public int currentPage { get; set; }
 
         public int countPages { get; set; }
@@ -34,21 +34,31 @@ namespace StudentManagementSystem.Pages.Students
         public string? MajorId { get; set; }
         [BindProperty]
         public string? StudentName { get; set; }
-
-        public async Task OnGetAsync(string? majorId, string? studentName)
+        [BindProperty] public int? ClassId { get; set; }
+        public async Task OnGetAsync(string? majorId, string? studentName, int? classid)
         {
             ViewData["MajorId"] = new SelectList(_context.Majors, "MajorId", "MajorName");
             IQueryable<Student> query = _context.Students
                                         .Include(s => s.Major)
                                         .Include(x => x.Class);
-                                        
+            if (classid != null)
+            {
+                query = query.Where(s => s.ClassId == classid);
+            }
+
+
             MajorId = majorId;
 
             if (MajorId != null)
             {
                 query = query.Where(s => s.MajorId == MajorId);
             }
-           
+            /*  ClassId = classid;
+              if (ClassId != null)
+              {
+                  query = query.Where(s => s.ClassId == ClassId);   
+              }*/
+
             StudentName = studentName;
             if (!string.IsNullOrEmpty(StudentName))
             {

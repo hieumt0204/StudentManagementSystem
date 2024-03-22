@@ -19,7 +19,7 @@ namespace StudentManagementSystem.Pages.Lectures
         }
 
         [BindProperty]
-      public Lecture Lecture { get; set; } = default!;
+        public Lecture Lecture { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -34,7 +34,7 @@ namespace StudentManagementSystem.Pages.Lectures
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Lecture = lecture;
             }

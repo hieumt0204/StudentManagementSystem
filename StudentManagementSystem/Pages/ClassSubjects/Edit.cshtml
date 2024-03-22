@@ -13,12 +13,13 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ClassSubject.ClassSubjectId" />
-            <input type="hidden" asp-for="ClassSubject.Slot" />
-            <input type="hidden" asp-for="ClassSubject.Date" />
-            <input type="hidden" asp-for="ClassSubject.Room" />
-            <input type="hidden" asp-for="ClassSubject.LectureId" />
+           
            @* <input type="hidden" asp-for="ClassSubject.SubjectId" />*@
+            <div class="form-group">
+                <label asp-for="ClassSubject.ClassSubjectId" class="control-label"></label>
+                <input asp-for="ClassSubject.ClassSubjectId" class="form-control" readonly="tre"/>
+                <span asp-validation-for="ClassSubject.ClassSubjectId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="ClassSubject.NumberOfStudents" class="control-label"></label>
                 <input asp-for="ClassSubject.NumberOfStudents" class="form-control" />
@@ -33,6 +34,26 @@
                 <label asp-for="ClassSubject.SubjectId" class="control-label"></label>
                 <select asp-for="ClassSubject.SubjectId" class="form-control" asp-items="ViewBag.SubjectId"></select>
                 <span asp-validation-for="ClassSubject.SubjectId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassSubject.Slot" class="control-label"></label>
+                <input asp-for="ClassSubject.Slot" class="form-control" />
+                <span asp-validation-for="ClassSubject.Slot" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassSubject.Date" class="control-label"></label>
+                <input asp-for="ClassSubject.Date" class="form-control" />
+                <span asp-validation-for="ClassSubject.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassSubject.Room" class="control-label"></label>
+                <input asp-for="ClassSubject.Room" class="form-control" />
+                <span asp-validation-for="ClassSubject.Room" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassSubject.LectureId" class="control-label"></label>
+                <select asp-for="ClassSubject.LectureId" class="form-control" asp-items="ViewBag.LectureId"></select>
+                <span asp-validation-for="ClassSubject.LectureId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

@@ -5,42 +5,53 @@
     ViewData["Title"] = "Classes";
 }
 
-<h1>Index</h1>
-@if (Model.RoleId == 1)
+@if(Model.RoleId != 0)
 {
-    <p>
-        <a asp-page="Create">Create New</a>
-    </p>
-}
+    <h1>Index</h1>
+    @if (Model.RoleId == 1)
+    {
+        <p>
+            <a asp-page="Create">Create New</a>
+        </p>
+    }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Class Name
-            </th>
-
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Class)
-        {
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    <a asp-page="/ClassSubjects/Index" asp-route-ClassId="@item.ClassId">@item.ClassClassName</a>
-                </td>
-                <td>
-                    @if (Model.RoleId == 1)
-                    {
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@item.ClassId">Edit</a> |
-                        <a asp-page="./Details" asp-route-id="@item.ClassId">Details</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.ClassId">Delete</a>
-                    </td>
-                    }
+                <th>
+                    Class Name
+                </th>
 
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Class)
+            {
+                <tr>
+                    <td>
+                        <a asp-page="/ClassSubjects/Index" asp-route-ClassId="@item.ClassId">@item.ClassClassName</a>
+                    </td>
+                    <td>
+                        @if (Model.RoleId == 1)
+                        {
+                            @if (Model.RoleId == 1)
+                            {
+                            <td>
+                                <a asp-page="./Edit" asp-route-id="@item.ClassId">Edit</a> |
+                                <a asp-page="./Details" asp-route-id="@item.ClassId">Details</a> |
+                                <a asp-page="./Delete" asp-route-id="@item.ClassId">Delete</a>
+                            </td>
+                            }
+
+                        }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    @await Html.PartialAsync("_AccessDenied")
+}

@@ -24,7 +24,7 @@ namespace StudentManagementSystem.Pages.ClassSubjects
         [BindProperty]
         public int? ClassId { get; set; }
         [BindProperty(SupportsGet = true, Name = "ipp")]
-        public int ItemsPerPage { get; set; } = 15;
+        public int ItemsPerPage { get; set; } = 10;
         //public const int ITEMS_PER_PAGE = 10;
         [BindProperty(SupportsGet = true, Name = "p")]
 

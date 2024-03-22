@@ -20,7 +20,7 @@ namespace StudentManagementSystem.Pages.Exercises
         public IQueryable<Excercy> query;
         public IList<Excercy> Excercy { get; set; } = default!;
         [BindProperty(SupportsGet = true, Name = "ipp")]
-        public int ItemsPerPage { get; set; } = 15;
+        public int ItemsPerPage { get; set; } = 10;
         //public const int ITEMS_PER_PAGE = 10;
         [BindProperty(SupportsGet = true, Name = "p")]
 

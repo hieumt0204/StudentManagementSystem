@@ -49,17 +49,30 @@
                 <span asp-validation-for="Student.Semester" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Student.RoleId" class="control-label"></label>
-                <select asp-for="Student.RoleId" class ="form-control" asp-items="ViewBag.RoleId"></select>
+                <label asp-for="Student.ClassId" class="control-label"></label>
+                <select asp-for="Student.ClassId" class="form-control" asp-items="ViewBag.ClassId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Student.MajorId" class="control-label"></label>
-                <select asp-for="Student.MajorId" class ="form-control" asp-items="ViewBag.MajorId"></select>
+                <select asp-for="Student.MajorId" class="form-control" asp-items="ViewBag.MajorId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Student.Gender" class="control-label"></label>
                 <input asp-for="Student.Gender" class="form-control" />
                 <span asp-validation-for="Student.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.RoleId" class="control-label"></label>
+                <!-- Remove the input field for RoleId -->
+                <!-- <input asp-for="Lecture.RoleId" class="form-control" /> -->
+                <span asp-validation-for="Student.RoleId" class="text-danger">3</span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Student.IsActive" class="control-label"></label>
+                <select asp-for="Student.IsActive" class="form-control">
+                    <option>True</option>
+                    <option>False</option>
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -73,5 +86,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

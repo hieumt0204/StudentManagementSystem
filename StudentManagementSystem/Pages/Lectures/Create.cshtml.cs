@@ -20,22 +20,23 @@ namespace StudentManagementSystem.Pages.Lectures
 
         public IActionResult OnGet()
         {
-       
+
             return Page();
         }
 
         [BindProperty]
         public Lecture Lecture { get; set; } = default!;
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Lectures == null || Lecture == null)
+            if (!ModelState.IsValid || _context.Lectures == null || Lecture == null)
             {
                 return Page();
             }
-
+            Lecture.RoleId = 2;
+            ViewData["RoleId"] = 2;
             _context.Lectures.Add(Lecture);
             await _context.SaveChangesAsync();
 

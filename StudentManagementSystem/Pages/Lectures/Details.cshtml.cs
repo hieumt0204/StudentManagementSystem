@@ -18,7 +18,7 @@ namespace StudentManagementSystem.Pages.Lectures
             _context = context;
         }
 
-      public Lecture Lecture { get; set; } = default!; 
+        public Lecture Lecture { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -32,7 +32,7 @@ namespace StudentManagementSystem.Pages.Lectures
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Lecture = lecture;
             }

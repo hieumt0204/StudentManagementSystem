@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using StudentManagementSystem.Models;
 
@@ -18,7 +19,7 @@ namespace StudentManagementSystem.Pages.Students
             _context = context;
         }
 
-      public Student Student { get; set; } = default!; 
+        public Student Student { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -26,13 +27,13 @@ namespace StudentManagementSystem.Pages.Students
             {
                 return NotFound();
             }
-
+            ViewData["MajorId"] = new SelectList(_context.Majors, "MajorId", "MajorName");
             var student = await _context.Students.FirstOrDefaultAsync(m => m.StudentId == id);
             if (student == null)
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Student = student;
             }

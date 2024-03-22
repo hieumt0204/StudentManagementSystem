@@ -22,14 +22,14 @@ namespace StudentManagementSystem.Pages.ClassSubjects
         [BindProperty]
         public ClassSubject ClassSubject { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string id, string subjectId, int classId)
         {
-            if (id == null || _context.ClassSubjects == null)
+            if (id == null || _context.ClassSubjects == null || subjectId == null || classId == 0)
             {
                 return NotFound();
             }
 
-            var classsubject =  await _context.ClassSubjects.FirstOrDefaultAsync(m => m.ClassSubjectId == id);
+            var classsubject =  await _context.ClassSubjects.FirstOrDefaultAsync(m => m.ClassSubjectId == id && m.SubjectId == subjectId && m.ClassId == classId);
             if (classsubject == null)
             {
                 return NotFound();
@@ -46,10 +46,7 @@ namespace StudentManagementSystem.Pages.ClassSubjects
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+           
 
             _context.Attach(ClassSubject).State = EntityState.Modified;
 
@@ -69,7 +66,7 @@ namespace StudentManagementSystem.Pages.ClassSubjects
                 }
             }
 
-            return RedirectToPage("./Index", new { ClassSubject.SubjectId,ClassSubject.ClassId }) ;
+            return RedirectToPage("./Index", new { ClassSubject.SubjectId}) ;
         }
 
         private bool ClassSubjectExists(string id)

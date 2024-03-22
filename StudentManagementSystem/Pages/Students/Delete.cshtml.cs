@@ -19,7 +19,7 @@ namespace StudentManagementSystem.Pages.Students
         }
 
         [BindProperty]
-      public Student Student { get; set; } = default!;
+        public Student Student { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -34,7 +34,7 @@ namespace StudentManagementSystem.Pages.Students
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Student = student;
             }

@@ -29,13 +29,13 @@ namespace StudentManagementSystem.Pages.Lectures
                 return NotFound();
             }
 
-            var lecture =  await _context.Lectures.FirstOrDefaultAsync(m => m.LectureId == id);
+            var lecture = await _context.Lectures.FirstOrDefaultAsync(m => m.LectureId == id);
             if (lecture == null)
             {
                 return NotFound();
             }
             Lecture = lecture;
-        
+
             return Page();
         }
 
@@ -43,13 +43,14 @@ namespace StudentManagementSystem.Pages.Lectures
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
             _context.Attach(Lecture).State = EntityState.Modified;
-
+            Lecture.RoleId = 2;
             try
             {
                 await _context.SaveChangesAsync();
@@ -71,7 +72,7 @@ namespace StudentManagementSystem.Pages.Lectures
 
         private bool LectureExists(string id)
         {
-          return (_context.Lectures?.Any(e => e.LectureId == id)).GetValueOrDefault();
+            return (_context.Lectures?.Any(e => e.LectureId == id)).GetValueOrDefault();
         }
     }
 }

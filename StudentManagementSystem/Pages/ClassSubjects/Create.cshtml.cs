@@ -29,12 +29,12 @@ namespace StudentManagementSystem.Pages.ClassSubjects
 
         [BindProperty]
         public ClassSubject ClassSubject { get; set; } = default!;
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.ClassSubjects == null || ClassSubject == null)
+            if (!ModelState.IsValid || _context.ClassSubjects == null || ClassSubject == null)
             {
                 return Page();
             }
@@ -42,7 +42,7 @@ namespace StudentManagementSystem.Pages.ClassSubjects
             _context.ClassSubjects.Add(ClassSubject);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new {ClassSubject.SubjectId, ClassSubject.ClassId});
         }
     }
 }

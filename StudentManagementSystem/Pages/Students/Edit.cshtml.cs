@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -12,48 +11,75 @@ namespace StudentManagementSystem.Pages.Students
 {
     public class EditModel : PageModel
     {
-        private readonly StudentManagementSystem.Models.PRN221_StudentManagementSystemContext _context;
+        private readonly PRN221_StudentManagementSystemContext _context;
 
-        public EditModel(StudentManagementSystem.Models.PRN221_StudentManagementSystemContext context)
+        public EditModel(PRN221_StudentManagementSystemContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Student Student { get; set; } = default!;
+        public Student Student { get; set; }
+
+        public SelectList ClassList { get; set; }
+        public SelectList MajorList { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null || _context.Students == null)
+            ViewData["MajorId"] = new SelectList(_context.Majors, "MajorId", "MajorName");
+            ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassClassName");
+
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var student =  await _context.Students.FirstOrDefaultAsync(m => m.StudentId == id);
-            if (student == null)
+            Student = await _context.Students.FindAsync(id);
+
+            if (Student == null)
             {
                 return NotFound();
             }
-            Student = student;
-           ViewData["MajorId"] = new SelectList(_context.Majors, "MajorId", "MajorId");
-          
+
+            ClassList = new SelectList(_context.Classes, "ClassId", "ClassClassName");
+            MajorList = new SelectList(_context.Majors, "MajorId", "MajorName");
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+
+            ViewData["MajorId"] = new SelectList(_context.Majors, "MajorId", "MajorName");
+            ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassClassName");
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(Student).State = EntityState.Modified;
-
             try
             {
+                var existingStudent = await _context.Students.FindAsync(Student.StudentId);
+                if (existingStudent == null)
+                {
+                    return NotFound();
+                }
+
+                existingStudent.StudentName = Student.StudentName;
+                existingStudent.StudentEmail = Student.StudentEmail;
+                existingStudent.Password = Student.Password;
+                existingStudent.Dob = Student.Dob;
+                existingStudent.Phone = Student.Phone;
+                existingStudent.Semester = Student.Semester;
+                existingStudent.ClassId = Student.ClassId;
+                existingStudent.MajorId = Student.MajorId;
+                existingStudent.Gender = Student.Gender;
+                existingStudent.IsActive = Student.IsActive;
+                Student.RoleId = 3;
+
                 await _context.SaveChangesAsync();
+
+                return RedirectToPage("./Index");
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -66,13 +92,11 @@ namespace StudentManagementSystem.Pages.Students
                     throw;
                 }
             }
-
-            return RedirectToPage("./Index");
         }
 
         private bool StudentExists(string id)
         {
-          return (_context.Students?.Any(e => e.StudentId == id)).GetValueOrDefault();
+            return _context.Students.Any(e => e.StudentId == id);
         }
     }
 }

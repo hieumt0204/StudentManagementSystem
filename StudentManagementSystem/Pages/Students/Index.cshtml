@@ -70,7 +70,13 @@
                                         @Html.DisplayNameFor(model => model.Student[0].Major)
                                     </th>
                                     <th data-sortable="true">
-                                        ClassName
+                                        @Html.DisplayNameFor(model => model.Student[0].Class)
+                                    </th>
+                                    <th data-sortable="true">
+                                        @Html.DisplayNameFor(model => model.Student[0].Gender)
+                                    </th>
+                                    <th data-sortable="true">
+                                        @Html.DisplayNameFor(model => model.Student[0].IsActive)
                                     </th>
                                     <th></th>
                                 </tr>
@@ -98,6 +104,12 @@
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Class.ClassClassName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Gender)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.IsActive)
                                         </td>
                                         <td>
                                             <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.StudentId">Edit</a>
