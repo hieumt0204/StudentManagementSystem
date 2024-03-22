@@ -5,7 +5,7 @@
 @model StudentManagementSystem.Pages.Subjects.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Subject";
     var pagingmodel = new StudentManagementSystem.Helpers.PagingModel()
             {
                 currentPage = Model.currentPage,
@@ -20,6 +20,7 @@
     Lecture? lecture = context.Lectures.FirstOrDefault(x => x.LectureId == lectureId);
     Admin? admin = context.Admins.FirstOrDefault(x => x.RoleId == roleId);
 }
+
 @if (roleId != null)
 {
     <div class="row bg-white p-2">
@@ -73,7 +74,7 @@
 
                                         <td>
 
-                                            <a asp-page="/ClassSubjects/Index" asp-route-subjectId="@item.SubjectId"> @Html.DisplayFor(modelItem => item.SubjectId) </a>
+                                            <a asp-page="/ClassSubjects/Index" asp-route-subjectId="@item.SubjectId" > @Html.DisplayFor(modelItem => item.SubjectId) </a>
                                         </td>
                                        
                                         <td>

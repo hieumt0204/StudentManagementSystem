@@ -31,14 +31,28 @@ namespace StudentManagementSystem.Pages.ClassSubjects
         public int currentPage { get; set; }
 
         public int countPages { get; set; }
+        [BindProperty]
+        public string? SearchPage { get; set; }
 
-
+        [BindProperty]
+        public int RoleId { get; set; }
+        [BindProperty]
+        public Student student { get; set; }
         public async Task OnGetAsync(string? subjectId, int? classId)
         {
             ViewData["SubjectId"] = new SelectList(await _context.Subjects.ToListAsync(), "SubjectId", "SubjectId");
             ViewData["ClassId"] = new SelectList(await _context.Classes.ToListAsync(), "ClassId", "ClassClassName");
-
-
+            var studentId = HttpContext?.Session.GetString("StudentId");
+            var lectureId = HttpContext?.Session.GetString("LectureId");
+            var roleId = HttpContext?.Session.GetInt32("RoleId");
+            RoleId  = roleId ?? 0;
+            
+            if (studentId != null)
+            {
+                student = await _context.Students.FirstOrDefaultAsync(m => m.StudentId == studentId);
+                ClassId = student.ClassId;
+            }
+           
             IQueryable<ClassSubject> query = _context.ClassSubjects
                 .Include(c => c.Class)
                 .Include(c => c.Lecture)
@@ -54,6 +68,19 @@ namespace StudentManagementSystem.Pages.ClassSubjects
                 ClassId = classId;
                 query = query.Where(x => x.ClassId == ClassId);
             }
+            if(student != null)
+            {
+                query = query.Where(x => x.ClassId == student.ClassId);
+            }
+            if(lectureId != null)
+            {
+                query = query.Where(x => x.LectureId == lectureId);
+            }
+            if(student != null)
+            {
+                ViewData["ClassSName"] = student.Class.ClassClassName;
+            }
+           
             int totalClassSubject = await query.CountAsync();
             countPages = (int)Math.Ceiling((double)totalClassSubject / ItemsPerPage);
             if (currentPage < 1)

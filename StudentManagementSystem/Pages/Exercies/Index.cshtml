@@ -6,7 +6,6 @@
 
 @{
     ViewData["Title"] = "Index";
-    ViewData["Title"] = "Index";
     var pagingmodel = new StudentManagementSystem.Helpers.PagingModel()
             {
                 currentPage = Model.currentPage,
@@ -21,6 +20,7 @@
     Lecture? lecture = context.Lectures.FirstOrDefault(x => x.LectureId == lectureId);
     Admin? admin = context.Admins.FirstOrDefault(x => x.RoleId == roleId);
 }
+
 @if (roleId != null)
 {
     <div class="row bg-white p-2">

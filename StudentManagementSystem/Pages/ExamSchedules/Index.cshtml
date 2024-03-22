@@ -3,99 +3,172 @@
 
 @{
     ViewData["Title"] = "Schedule Exam";
+    var pagingmodel = new StudentManagementSystem.Helpers.PagingModel()
+            {
+                currentPage = Model.CurrentPage,
+                countPages = Model.CountPages,
+                generateUrl = (int? page) => Url.Page("/ExamSchedules/Index", new { p = page })
+            };
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead class="table-success">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ExamSchedule[0].Room)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExamSchedule[0].TypeOfExam)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExamSchedule[0].Date)
-            </th>
-            <th>Time</th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExamSchedule[0].DateOfPublic)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExamSchedule[0].DateOfResit)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExamSchedule[0].TimeFromResit)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExamSchedule[0].TimeToResit)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExamSchedule[0].DateOfPublicResit)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExamSchedule[0].Lecture)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExamSchedule[0].Semester)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExamSchedule[0].Subject)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.ExamSchedule) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Room)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeOfExam)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.TimeFrom)-@Html.DisplayFor(modelItem => item.TimeTo)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfPublic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfResit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeFromResit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeToResit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfPublicResit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lecture.LectureId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Semester.SemesterId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Subject.SubjectId)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ExamScheduleId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ExamScheduleId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ExamScheduleId">Delete</a>
-            </td>
-        </tr>
+@if (ViewBag.RoleId == 1 || ViewBag.RoleId == 2)
+{
+    <div class="row bg-white p-2">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <h3 class="box-title">Manage Exam Schedule </h3>
+                @* <form method="get">
+            <div class="row">
+            <div class="col-md-3 form-group">
+            <select asp-for="MajorId" class="form-control" asp-items="@ViewBag.MajorId">
+            <option value="">All</option>
+            </select>
+            </div>
+
+            <div class="col-md-9"></div>
+            <div class="col-md-3 form-group">
+            <input placeholder="Search Name..." name="studentName" value="@Model.StudentName" class="form-control" />
+            </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+            </form>*@
+                @if (ViewBag.RoleId == 1)
+                {
+                    <p>
+                        <a class="btn btn-primary mt-2" asp-page="Create">Create New</a>
+                    </p>
+                }
+                <div class="table-responsive">
+                    @if (Model.ExamSchedule.Any())
+                    {
+                        <table id="userTable" data-toggle="table"
+                               class="table text-nowrap">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ExamSchedule[0].Room)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ExamSchedule[0].TypeOfExam)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ExamSchedule[0].Date)
+                                    </th>
+                                    <th>Time</th>
+                                    @if (ViewBag.roleId == 1)
+                                    {
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ExamSchedule[0].DateOfPublic)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ExamSchedule[0].DateOfResit)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ExamSchedule[0].TimeFromResit)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ExamSchedule[0].TimeToResit)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ExamSchedule[0].DateOfPublicResit)
+                                        </th>
+                                    }
+
+
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ExamSchedule[0].Lecture)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ExamSchedule[0].Semester.ClassSemesterName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ExamSchedule[0].Subject)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ExamSchedule[0].Semester.Year)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ExamSchedule)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Room)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TypeOfExam)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Date)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TimeFrom)-@Html.DisplayFor(modelItem => item.TimeTo)
+                                        </td>
+                                        @if (ViewBag.roleId == 1)
+                                        {
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DateOfPublic)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DateOfResit)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TimeFromResit)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TimeToResit)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DateOfPublicResit)
+                                            </td>
+                                        }
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Lecture.LectureId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Semester.ClassSemesterName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Subject.SubjectId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Semester.Year)
+                                        </td>
+                                        @if (ViewBag.roleId == 1)
+                                        {
+                                            <td>
+                                                <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.ExamScheduleId">Edit</a> |
+                                                <a class="btn btn-info" asp-page="./Details" asp-route-id="@item.ExamScheduleId">Details</a> |
+                                                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.ExamScheduleId">Delete</a>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No results found.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("/Pages/Shared/_Paging.cshtml",pagingmodel)
 }
-    </tbody>
-</table>
+else
+{
+    @await Html.PartialAsync("_AccessDenied")
+
+}

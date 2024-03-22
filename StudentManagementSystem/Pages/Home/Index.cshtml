@@ -4,7 +4,7 @@
 @using StudentManagementSystem.Models;
 @inject IHttpContextAccessor Accessor
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home Page";
     int? roleId = @Accessor.HttpContext?.Session.GetInt32("RoleId");
     string studentId = @Accessor.HttpContext?.Session.GetString("StudentId");
     string lectureId = Accessor.HttpContext?.Session.GetString("LectureId");
@@ -14,6 +14,7 @@
     Admin? admin = context.Admins.FirstOrDefault(x => x.RoleId == roleId);
 
 }
+
 
 @if (Model.Message != null)
 {

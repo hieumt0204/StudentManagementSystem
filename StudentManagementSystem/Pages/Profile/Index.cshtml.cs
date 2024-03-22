@@ -18,8 +18,10 @@ namespace StudentManagementSystem.Pages.Profile
 
         [BindProperty]
         public Student Student { get; set; }
-        [BindProperty]
-        public string Message { get; set; }
+
+        [TempData]
+        public string SuccessMessage { get; set; } // TempData to store success message
+
         public async Task<IActionResult> OnGetAsync()
         {
             string studentId = HttpContext?.Session.GetString("StudentId");
@@ -34,20 +36,31 @@ namespace StudentManagementSystem.Pages.Profile
             {
                 return NotFound();
             }
-        
+
+            // Check for success message and display it
+            if (!string.IsNullOrEmpty(SuccessMessage))
+            {
+                ViewData["SuccessMessage"] = SuccessMessage;
+            }
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-          
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
             _context.Attach(Student).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
-                Message = "Update profile successfully!";
+
+                // Set success message
+                SuccessMessage = "Profile updated successfully";
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -60,8 +73,8 @@ namespace StudentManagementSystem.Pages.Profile
                     throw;
                 }
             }
- 
-            return RedirectToPage();
+
+            return RedirectToPage("./Index");
         }
 
         private bool StudentExists(string id)

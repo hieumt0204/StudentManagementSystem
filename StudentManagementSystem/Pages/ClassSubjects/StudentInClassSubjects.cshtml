@@ -1,0 +1,45 @@
+﻿@page
+@model StudentManagementSystem.Pages.ClassSubjects.StudentInClassModel
+@{
+    ViewData["Title"] = "StudentInClass";
+}
+
+<div class="row bg-white p-2">
+    <div class="col-sm-12">
+        <div class="white-box">
+            <h3 class="box-title">Student In Class </h3>
+            <div class="table-responsive">
+                <table id="userTable" data-toggle="table"
+                       class="table text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>Student Id</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Major</th>
+                                <th>Semester</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Students)
+                            {
+                                <tr>
+                                    <td>@item.StudentId</td>
+                                    <td>@item.StudentName</td>
+                                    <td>@item.StudentEmail</td>
+                                    <td>@item.MajorId</td>
+                                    <td>@item.Semester</td>
+                                </tr>
+                            }
+                        </tbody>
+
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a asp-page="./Index" asp-route-classId="@ViewBag.ClassId">Back to List</a>
+</div>

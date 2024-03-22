@@ -17,7 +17,7 @@ namespace StudentManagementSystem.Models
         public string Password { get; set; } = null!;
         public DateTime? Dob { get; set; }
         public string? Phone { get; set; }
-        public int Semester { get; set; }
+        public int? Semester { get; set; }
         public int RoleId { get; set; }
         public string MajorId { get; set; } = null!;
         public bool? Gender { get; set; }
@@ -25,7 +25,7 @@ namespace StudentManagementSystem.Models
         public int? ClassId { get; set; }
 
         public virtual Class? Class { get; set; }
-        public virtual Major Major { get; set; } = null!;
+        public virtual Major? Major { get; set; } = null!;
         public virtual ICollection<StudentsExcercy> StudentsExcercies { get; set; }
 
         public virtual ICollection<ExamSchedule> ExamSchedules { get; set; }

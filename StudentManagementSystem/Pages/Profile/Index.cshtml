@@ -5,10 +5,11 @@
 }
 
 @*<h1>Update Profile</h1>*@
-@if (@Model.Message != null)
+
+@if (ViewData["SuccessMessage"] != null)
 {
     <div class="alert alert-success" role="alert">
-        @Model.Message
+        @ViewData["SuccessMessage"]
     </div>
 }
 <form method="post">
@@ -69,6 +70,11 @@
         <label asp-for="Student.ClassId" class="control-label"></label>
         <input asp-for="Student.ClassId" class="form-control" readonly />
         <span asp-validation-for="Student.ClassId" class="text-danger"></span>
+    </div>
+    <div class="form-group" style="display: none;">
+        <label asp-for="Student.Semester" class="control-label"></label>
+        <input asp-for="Student.Semester" class="form-control" readonly />
+        <span asp-validation-for="Student.Semester" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
 </form>

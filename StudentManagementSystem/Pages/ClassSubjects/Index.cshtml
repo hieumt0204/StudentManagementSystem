@@ -10,38 +10,61 @@
             };
 }
 
-<h1>Class Subjects</h1>
-<form method="get">
-    <div class="row">
-        <div class="col-md-6 form-group">
-            <select id="SubjectId" asp-for="SubjectId" class="form-control" asp-items="@ViewBag.SubjectId">
-                <option value="">All</option>
-            </select>
+@if(Model.RoleId == 3)
+{
+    <h1>Class Subjects of @ViewBag.ClassSName</h1>
+    <h2> Class Of @Model.student.StudentName</h2>
+}
+@if(Model.RoleId == 1)
+{
+
+    <h1>Manage Class Subject</h1>
+}
+@if(Model.RoleId == 1)
+{
+    <form method="get">
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <select id="SubjectId" asp-for="SubjectId" class="form-control" asp-items="@ViewBag.SubjectId">
+                    <option value="">All</option>
+                </select>
+            </div>
+            <div class="col-md-6 form-group">
+                <select id="ClassId" asp-for="ClassId" class="form-control" asp-items="@ViewBag.ClassId">
+                    <option value="">All</option>
+                </select>
+            </div>
+            <br>
+
+            <br />
+            <div class="col-md-6 form-group">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+
         </div>
-        <div class="col-md-6 form-group">
-            <select id="ClassId" asp-for="ClassId" class="form-control" asp-items="@ViewBag.ClassId">
-                <option value="">All</option>
-            </select>
-        </div>
-        <br />
-        <div class="col-md-6 form-group">
-            <button type="submit" class="btn btn-primary">Filter</button>
-        </div>
-        
-    </div>
-</form>
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+    </form>
+}
+@if (Model.RoleId == 1)
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
+
 <table id="classSubjectsTable" class="table">
     <thead>
         <tr>
             <th>Number of Students</th>
             <th>Class</th>
+            <th>Slot</th>
             <th>Lecture</th>
             <th>Room</th>
             <th>Subject</th>
-            <th>Actions</th>
+            @if (Model.RoleId == 1)
+            {
+                <th>Actions</th>
+            }
+
         </tr>
     </thead>
     <tbody>
@@ -49,15 +72,31 @@
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.NumberOfStudents)</td>
-                <td>@Html.DisplayFor(modelItem => item.Class.ClassClassName)</td>
+                <td>
+                    @if (Model.ClassId.HasValue || Model.RoleId == 1 || Model.RoleId == 2)
+                    {
+                        <a asp-page="./StudentInClassSubjects" asp-route-classId="@item.ClassId">
+                            @Html.DisplayFor(modelItem => item.Class.ClassClassName)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Class.ClassClassName)
+                    }
+                </td>
+                
+                <td>@Html.DisplayFor(modelItem => item.Slot)
                 <td>@Html.DisplayFor(modelItem => item.Lecture.LectureName)</td>
                 <td>@Html.DisplayFor(modelItem => item.RoomNavigation.RoomId)</td>
                 <td>@Html.DisplayFor(modelItem => item.Subject.SubjectId)</td>
-                <td>
-                    <a asp-page="./Edit" asp-route-subjectId="@item.ClassSubjectId">Edit</a> |
-                    <a asp-page="./Details" asp-route-subjectId="@item.ClassSubjectId" asp-route-classId ="@item.ClassId">Details</a> |
-                    <a asp-page="./Delete" asp-route-subjectId="@item.ClassSubjectId">Delete</a>
-                </td>
+                @if (Model.RoleId == 1)
+                {
+                    <td>
+                        <a asp-page="./Edit" asp-route-subjectId="@item.ClassSubjectId">Edit</a> |
+                        <a asp-page="./Details" asp-route-subjectId="@item.ClassSubjectId" asp-route-classId="@item.ClassId">Details</a> |
+                        <a asp-page="./Delete" asp-route-subjectId="@item.ClassSubjectId">Delete</a>
+                    </td>
+                }
             </tr>
         }
     </tbody>
