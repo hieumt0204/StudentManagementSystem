@@ -1,0 +1,51 @@
+﻿@page
+@model StudentManagementSystem.Pages.Semesters.IndexModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Semester";
+    int? roleId = @Accessor.HttpContext?.Session.GetInt32("RoleId");
+}
+
+<h1>Semester</h1>
+
+@if(roleId == 1)
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Semester[0].ClassSemesterName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Semester[0].Year)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Semester)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassSemesterName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                @if (roleId == 1)
+                {
+                    <td>
+                        <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@item.SemesterId">Edit</a> |
+                        <a class="btn btn-warning" asp-page="./Details" asp-route-id="@item.SemesterId">Details</a> |
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.SemesterId">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

@@ -25,10 +25,10 @@ namespace StudentManagementSystem.Models
         public string SubjectId { get; set; } = null!;
         public int? SemesterId { get; set; }
 
-        public virtual Lecture Lecture { get; set; } = null!;
+        public virtual Lecture? Lecture { get; set; } = null!;
         public virtual Semester? Semester { get; set; }
-        public virtual Subject Subject { get; set; } = null!;
+        public virtual Subject? Subject { get; set; } = null!;
 
-        public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<Student>? Students { get; set; }
     }
 }

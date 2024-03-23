@@ -1,52 +1,121 @@
 ﻿@page
+@using StudentManagementSystem.Models;
 @model StudentManagementSystem.Pages.StudentExercise.IndexModel
-
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Student Exercise";
+    var pagingmodel = new StudentManagementSystem.Helpers.PagingModel()
+            {
+                currentPage = Model.currentPage,
+                countPages = Model.countPages,
+                generateUrl = (int? page) => Url.Page("/StudentExercise/Index", new { p = page })
+            };
+    int? roleId = @Accessor.HttpContext?.Session.GetInt32("RoleId");
+    string studentId = @Accessor.HttpContext?.Session.GetString("StudentId");
+    string lectureId = Accessor.HttpContext?.Session.GetString("LectureId");
+    PRN221_StudentManagementSystemContext context = new PRN221_StudentManagementSystemContext();
+    Student? student = context.Students.FirstOrDefault(x => x.StudentId == studentId);
+    Lecture? lecture = context.Lectures.FirstOrDefault(x => x.LectureId == lectureId);
+    Admin? admin = context.Admins.FirstOrDefault(x => x.RoleId == roleId);
 }
 
-<h1>Do Exercise</h1>
+@if (roleId != 0)
+{
+    <div class="row bg-white p-2">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <h3 class="box-title">Exercise</h3>
+                @if(student != null)
+                {
+                    <h3>Mark of : @student.StudentName</h3>
+                }
+                @* <form method="get">
+            <div class="row">
+            <div class="col-md-3 form-group">
+            <select asp-for="MajorId" class="form-control" asp-items="@ViewBag.MajorId">
+            <option value="">All</option>
+            </select>
+            </div>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentsExcercy[0].Mark)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentsExcercy[0].ExerciseNameNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentsExcercy[0].Student)
-            </th>
-            <th>Subject Name</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.StudentsExcercy) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mark)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExerciseNameNavigation.ExerciseName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.StudentId)
-            </td>
-            <td>
-                @item.ExerciseNameNavigation.SubjectId
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+            <div class="col-md-9"></div>
+            <div class="col-md-3 form-group">
+            <input placeholder="Search Name..." name="studentName" value="@Model.StudentName" class="form-control" />
+            </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+            </form>*@
+                @if(roleId == 1)
+                {
+                    <p>
+                        <a class="btn btn-primary mt-2" asp-page="Create">Create New</a>
+                    </p>
+                }
+                <div class="table-responsive">
+                    @if (Model.StudentsExcercy.Any())
+                    {
+                        <table id="userTable" data-toggle="table"
+                               class="table text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.StudentsExcercy[0].Mark)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.StudentsExcercy[0].ExerciseNameNavigation)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.StudentsExcercy[0].Student)
+                                    </th>
+                                    <th>Subject Name</th>
+                                    @if(roleId == 1)
+                                    {
+                                        <th>Action</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.StudentsExcercy)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Mark)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ExerciseNameNavigation.ExerciseName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Student.StudentId)
+                                        </td>
+                                        <td>
+                                            @item.ExerciseNameNavigation.SubjectId
+                                        </td>
+                                        @if (roleId == 1)
+                                        {
+                                            <td>
+                                                @Html.ActionLink("Edit", "Edit", new { id = item.StudentId }) |
+                                                @Html.ActionLink("Details", "Details", new { id = item.StudentId }) |
+                                                @Html.ActionLink("Delete", "Delete", new { id = item.StudentId })
+                                            </td>
+                                        }
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No results found.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("/Pages/Shared/_Paging.cshtml",pagingmodel)
 }
-    </tbody>
-</table>
+else
+{
+    @await Html.PartialAsync("_AccessDenied")
+
+}

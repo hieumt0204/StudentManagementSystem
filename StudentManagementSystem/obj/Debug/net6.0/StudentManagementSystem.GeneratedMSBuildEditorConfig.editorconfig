@@ -152,6 +152,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0ZXJcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/Semesters/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VtZXN0ZXJzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/Semesters/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VtZXN0ZXJzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/Semesters/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VtZXN0ZXJzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/Semesters/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VtZXN0ZXJzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/Semesters/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VtZXN0ZXJzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/FULearning/Semester7th_Spring2024/PRN221/Final Project/StudentManagementSystem/StudentManagementSystem/Pages/Shared/_AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9BY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

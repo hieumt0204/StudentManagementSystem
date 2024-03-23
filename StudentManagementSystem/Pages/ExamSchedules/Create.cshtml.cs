@@ -20,20 +20,21 @@ namespace StudentManagementSystem.Pages.ExamSchedules
 
         public IActionResult OnGet()
         {
-        ViewData["LectureId"] = new SelectList(_context.Lectures, "LectureId", "LectureId");
-        ViewData["SemesterId"] = new SelectList(_context.Semesters, "SemesterId", "SemesterId");
-        ViewData["SubjectId"] = new SelectList(_context.Subjects, "SubjectId", "SubjectId");
+            ViewData["LectureId"] = new SelectList(_context.Lectures, "LectureId", "LectureId");
+            ViewData["SemesterId"] = new SelectList(_context.Semesters, "SemesterId", "SemesterId");
+            ViewData["SubjectId"] = new SelectList(_context.Subjects, "SubjectId", "SubjectId");
+            ViewData["Room"] = new SelectList(_context.Rooms, "RoomId", "RoomId");
             return Page();
         }
 
         [BindProperty]
         public ExamSchedule ExamSchedule { get; set; } = default!;
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.ExamSchedules == null || ExamSchedule == null)
+            if (!ModelState.IsValid || _context.ExamSchedules == null || ExamSchedule == null)
             {
                 return Page();
             }

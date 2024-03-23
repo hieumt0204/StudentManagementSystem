@@ -17,34 +17,37 @@ namespace StudentManagementSystem.Pages.StudentExamSchedule
             _context = context;
         }
 
-        public List<ExamSchedule> ExamSchedules { get; set; }
+        public List<ExamSchedule> ExamSchedules { get; set; } = new List<ExamSchedule>();
+        [BindProperty(SupportsGet = true, Name = "ipp")]
+        public int ItemsPerPage { get; set; } = 10;
+        [BindProperty(SupportsGet = true, Name = "p")]
+        public int CurrentPage { get; set; } = 1;
+        public int countPages { get; set; }
+      
 
         public async Task OnGetAsync()
         {
             string studentId = HttpContext?.Session.GetString("StudentId");
             ViewData["StudentId"] = studentId;
 
+            IQueryable<ExamSchedule> query = _context.ExamSchedules
+                .Include(e => e.Lecture)
+                .Include(e => e.Semester)
+                .Include(e => e.Subject);
+
             if (!string.IsNullOrEmpty(studentId))
             {
-                // Lấy ra danh sách các kế hoạch thi của sinh viên dựa trên studentId
-                var studentExamSchedule = await _context.ExamSchedules
-                    .Include(x => x.Students)
-                       .Include(e => e.Lecture)
-                        .Include(e => e.Semester)
-                        .Include(e => e.Subject)
-                    .Where(x => x.Students.Any(s => s.StudentId == studentId))
-                    .ToListAsync();
+                query = query.Where(x => x.Students.Any(s => s.StudentId == studentId));
+            }
 
-                ExamSchedules = studentExamSchedule;
-            }
-            else
-            {
-                ExamSchedules = await _context.ExamSchedules
-                    .Include(e => e.Lecture)
-                    .Include(e => e.Semester)
-                    .Include(e => e.Subject)
-                    .ToListAsync();  
-            }
+            int totalExams = await query.CountAsync();
+            countPages = (int)Math.Ceiling((double)totalExams / ItemsPerPage);
+            CurrentPage = Math.Max(CurrentPage, 1);
+
+            ExamSchedules = await query
+                .Skip((CurrentPage - 1) * ItemsPerPage)
+                .Take(ItemsPerPage)
+                .ToListAsync();
         }
     }
 }

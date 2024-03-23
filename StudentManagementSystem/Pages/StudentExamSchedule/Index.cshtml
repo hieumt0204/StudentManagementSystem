@@ -1,63 +1,124 @@
 ﻿@page
 @model StudentManagementSystem.Pages.StudentExamSchedule.IndexModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
 @{
     ViewData["Title"] = "Student Schedule Exam";
+    int? roleId = @Accessor.HttpContext?.Session.GetInt32("RoleId");
+    var pagingmodel = new StudentManagementSystem.Helpers.PagingModel()
+            {
+                currentPage = Model.CurrentPage,
+                countPages = Model.countPages,
+                generateUrl = (int? page) => Url.Page("/StudentExamSchedule/Index", new { p = page })
+            };
 }
 
-<table class="table">
-    <thead class="table-success">
-        <tr>
-            <th>
-                Room
-            </th>
-            <th>
-                Type of Exam
-            </th>
-            <th>
-                Date
-            </th>
-            <th>
-                Time
-            </th>
-            <th>
-                Public Announcement
-            </th>
-            <th>
-                Date of Resit
-            </th>
-            <th>
-                Time of Resit
-            </th>
-            <th>
-                Public Announcement for Resit
-            </th>
-            <th>
-                Semester
-            </th>
-            <th>
-                Subject
-            </th>
-            <th>Student Id</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.ExamSchedules.OrderBy(e => e.Date))
-        {
-            <tr>
-                <td>@item.Room</td>
-                <td>@item.TypeOfExam</td>
-                <td>@item.Date.ToShortDateString()</td>
-                <td>@item.TimeFrom - @item.TimeTo</td>
-                <td>@item.DateOfPublic.ToShortDateString()</td>
-                <td>@item.DateOfResit</td>
-                <td>@item.TimeFromResit - @item.TimeToResit</td>
-                <td>@item.DateOfPublicResit</td>
-                <td>@item.Semester.SemesterId</td>
-                <td>@item.Subject.SubjectId</td>
-                <td>@ViewBag.StudentId</td>
+@if (roleId != 0)
+{
+    <div class="row bg-white p-2">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <h3 class="box-title">Manage Student Exam Schedule </h3>
+                @*<form method="get">
+            <div class="row">
+            <div class="col-md-3 form-group">
+            <select asp-for="MajorId" class="form-control" asp-items="@ViewBag.MajorId">
+            <option value="">All</option>
+            </select>
+            </div>
 
-            </tr>
-        }
-    </tbody>
-</table>
+            <div class="col-md-9"></div>
+            <div class="col-md-3 form-group">
+            <input placeholder="Search Name..." name="studentName" value="@Model.StudentName" class="form-control" />
+            </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+            </form>*@
+                @if (roleId == 1)
+                {
+                    <p>
+                        <a class="btn btn-primary mt-2" asp-page="Create">Create New</a>
+                    </p>
+                }
+                <div class="table-responsive">
+                    @if (Model.ExamSchedules.Any())
+                    {
+                        <table id="userTable" data-toggle="table"
+                               class="table text-nowrap">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>
+                                        Room
+                                    </th>
+                                    <th>
+                                        Type of Exam
+                                    </th>
+                                    <th>
+                                        Date
+                                    </th>
+                                    <th>
+                                        Time
+                                    </th>
+                                    <th>
+                                        Public Announcement
+                                    </th>
+                                    <th>
+                                        Date of Resit
+                                    </th>
+                                    <th>
+                                        Time of Resit
+                                    </th>
+                                    <th>
+                                        Public Announcement for Resit
+                                    </th>
+                                    <th>
+                                        Semester
+                                    </th>
+                                    <th>
+                                        Subject
+                                    </th>
+                                    @if (ViewBag.StudentId != null)
+                                    {
+                                        <th>Student Id</th>
+                                    }
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ExamSchedules.OrderBy(e => e.Date))
+                                {
+                                    <tr>
+                                        <td>@item.Room</td>
+                                        <td>@item.TypeOfExam</td>
+                                        <td>@item.Date.ToShortDateString()</td>
+                                        <td>@item.TimeFrom - @item.TimeTo</td>
+                                        <td>@item.DateOfPublic.ToShortDateString()</td>
+                                        <td>@item.DateOfResit</td>
+                                        <td>@item.TimeFromResit - @item.TimeToResit</td>
+                                        <td>@item.DateOfPublicResit</td>
+                                        <td>@item.Semester.SemesterId</td>
+                                        <td>@item.Subject.SubjectId</td>
+                                        @if (ViewBag.StudentId != null)
+                                        {
+                                            <td>@ViewBag.StudentId</td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No results found.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("/Pages/Shared/_Paging.cshtml",pagingmodel)
+}
+else
+{
+    @await Html.PartialAsync("_AccessDenied")
+
+}

@@ -19,11 +19,17 @@ namespace StudentManagementSystem.Pages.ManageClasses
         }
 
         public IList<Class> Class { get;set; } = default!;
+        [BindProperty]
         public int RoleId { get; set; }
         public async Task OnGetAsync()
         {
             var studentId = HttpContext?.Session.GetString("StudentId");
-            var RoleId = HttpContext?.Session.GetInt32("RoleId");
+            var roleId = HttpContext?.Session.GetInt32("RoleId");
+            if (roleId != null)
+            {
+                RoleId = roleId.Value;
+            }
+            
             if (_context.Classes != null)
             {
                 if(studentId == null)
